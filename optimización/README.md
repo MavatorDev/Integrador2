@@ -5,11 +5,17 @@
 En este módulo de python se genera el modelo de regresión Random Forest bajo los siguientes parámetros
 
 criterio = 'mse' (error cuadrático medio)
+
 profundidad máxima = None
+
 características = 'auto' ('int', 'float', 'sqrt', 'log2')
+
 hojas máximas = None ('int')
+
 número de árboles = 10
+
 númeor de trabajos paralelos = 2 
+
 estado aleatorio= None
 
 Haciendo lectura de los datasets tratados:

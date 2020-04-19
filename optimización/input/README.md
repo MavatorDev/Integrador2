@@ -19,3 +19,5 @@ Para posteriormente ser analizados con el módulo
 [HVAC_Model.py](../HVAC_Model.py)
 
 Con lo que se genera un Random Forest alimentado con el siguiente modelo de datos:
+
+https://github.com/eafit-201710044010/Integrador2/blob/master/optimizaci%C3%B3n/input/Modelo%20de%20datos.jpeg

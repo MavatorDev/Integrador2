@@ -16,4 +16,4 @@ A los que se les realizó limpieza, preparación y selección de datos y se gene
 
 Para posteriormente ser analizados con el módulo
 
-[HVAC_model.py](../HVAC_model.py)
+[HVAC_Model.py](../HVAC_Model.py)

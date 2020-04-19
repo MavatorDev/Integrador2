@@ -17,19 +17,19 @@ Haciendo lectura de los datasets tratados:
 
 ## ModuloOptimizacion  
 En este módulo de python se define el siguiente problema de optimización:  
-*Funciones objetivo*  
+**Funciones objetivo**  
 Min( Costo = Costo_forest.predict(configuración) )  
 Min( Consumo = Confort_forest.predict(configuración) )  
 Max( Confort = Confort_forest.predict(configuración) )  
 Max( COP = COP_forest.predict(configuración) )  
 
-*Variables de decisión*  
+**Variables de decisión**  
 Ce1 = Capacidad enfriador 1  
 Ce2 = Capacidad enfriador 2  
 Cc1 = Capacidad bombas de calor 1  
 Cc2 = Capacidad bombas de calor 2  
 
-*Restricciones*  
+**Restricciones**  
 Si Ce1 > 0 y Ce2 >0 Entonces Cc1 = 0 y Cc2 = 0  
 Si Cc1 > 0 y Cc2 >0 Entonces Ce1 = 0 y Ce2 = 0  
 Ce1, Ce2, Cc1, Cc2 Pertenecen a [0,100]  

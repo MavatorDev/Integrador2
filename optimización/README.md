@@ -2,21 +2,15 @@
 
 ## HVAC_Model
 
-En este módulo de python se genera el modelo de regresión Random Forest bajo los siguientes parámetros
+En este módulo de python se genera el modelo de regresión Random Forest bajo los siguientes parámetros\n
 
-criterio = 'mse' (error cuadrático medio)
-
-profundidad máxima = None
-
-características = 'auto' ('int', 'float', 'sqrt', 'log2')
-
-hojas máximas = None ('int')
-
-número de árboles = 10
-
-númeor de trabajos paralelos = 2 
-
-estado aleatorio= None
+criterio = 'mse' (error cuadrático medio)\n
+profundidad máxima = None\n
+características = 'auto' ('int', 'float', 'sqrt', 'log2')\n
+hojas máximas = None ('int')\n
+número de árboles = 10\n
+númeor de trabajos paralelos = 2 \n
+estado aleatorio= None\n
 
 Haciendo lectura de los datasets tratados:
 

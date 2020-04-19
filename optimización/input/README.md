@@ -17,3 +17,5 @@ A los que se les realizó limpieza, preparación y selección de datos y se gene
 Para posteriormente ser analizados con el módulo
 
 [HVAC_Model.py](../HVAC_Model.py)
+
+Con lo que se genera un Random Forest alimentado con el siguiente modelo de datos:

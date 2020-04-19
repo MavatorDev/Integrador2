@@ -33,3 +33,5 @@ Cc2 = Capacidad bombas de calor 2
 Si Ce1 > 0 y Ce2 >0 Entonces Cc1 = 0 y Cc2 = 0  
 Si Cc1 > 0 y Cc2 >0 Entonces Ce1 = 0 y Ce2 = 0  
 Ce1, Ce2, Cc1, Cc2 Pertenecen a [0,100]  
+
+Y se le da solución a través del algoritmo MOPSO usando la librería Jmetal, que es un framework para trabajos de optimización multiobjetivo.

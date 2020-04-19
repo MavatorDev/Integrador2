@@ -13,3 +13,7 @@ A los que se les realizó limpieza, preparación y selección de datos y se gene
 [predictors](predictors.xlsx)
 
 [targets](target.xlsx)
+
+Para posteriormente ser analizados con el módulo
+
+[HVAC_model.py](../HVAC_model.py)

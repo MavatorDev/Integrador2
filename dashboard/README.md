@@ -1,5 +1,5 @@
-#To run:
+# To run:
 
-npm install
+- npm install
 
-npm start
+- npm start

@@ -20,6 +20,15 @@ from flask import Flask
 
 app = Flask(__name__)
 
+Text = 0
+SetPoint = 0
+People = 0
+Tint = 0
+Month = 0
+Day = 0
+Hour = 0
+Interval = 1
+
 class Optimizacion(FloatProblem):
     def __init__(self):
         super(Optimizacion, self).__init__()
@@ -35,7 +44,7 @@ class Optimizacion(FloatProblem):
         self.upper_bound = self.number_of_variables * [1.0]
         
     def evaluate(self, solution: FloatSolution) -> FloatSolution:
-        resultados = forest.predict([solution.variables + [10, 23.5, 1700, 23, 9, 11, 18, 1]])
+        resultados = forest.predict([solution.variables + [Text, SetPoint, People, Tint, Month, Day, Hour, Interval]])
         
         solution.objectives[0] = resultados[0][0]
         solution.objectives[1] = resultados[0][1]
@@ -50,23 +59,17 @@ class Optimizacion(FloatProblem):
                                     number_of_objectives= self.number_of_objectives,
                                     number_of_constraints= self.number_of_constraints)
 
-        if 10 < 23.5:
-            new_solution.variables[0] = 0
-            new_solution.variables[1] = 0
-            new_solution.variables[2] = round(random.random()*(-100),2)
-            new_solution.variables[3] = round(random.random()*(-100),2)
-        else:
-            new_solution.variables[0] = round(random.random()*(-100),2)
-            new_solution.variables[1] = round(random.random()*(-100),2)
-            new_solution.variables[2] = 0
-            new_solution.variables[3] = 0
-
+        new_solution.variables[0] = round(random.random()*(-100),2)
+        new_solution.variables[1] = round(random.random()*(-100),2)
+        new_solution.variables[2] = round(random.random()*(-100),2)
+        new_solution.variables[3] = round(random.random()*(-100),2)
+            
         return new_solution
 
     def get_name(self) -> str:
         return 'Optimización'
 
-@app.route('/')
+@app.route('/optimizar')
 def main():
     problem = Optimizacion()
     mutation_probability = 1.0 / problem.number_of_variables

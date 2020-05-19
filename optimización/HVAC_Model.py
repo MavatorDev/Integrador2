@@ -82,6 +82,6 @@ forest = RandomForestRegressor(
     verbose = 0,
     warm_start = False)
 #Random Forest Model learning
-x = pd.read_excel('input/predictors.xlsx')
-y = pd.read_excel('input/target.xlsx')
+x = pd.read_excel('optimización/input/predictors.xlsx')
+y = pd.read_excel('optimización/input/target.xlsx')
 forest.fit(x,y)

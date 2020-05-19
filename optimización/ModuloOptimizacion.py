@@ -16,6 +16,10 @@ from jmetal.operator import BitFlipMutation, SPXCrossover
 from time import time
 import random
 
+from flask import Flask
+
+app = Flask(__name__)
+
 class Optimizacion(FloatProblem):
     def __init__(self):
         super(Optimizacion, self).__init__()
@@ -62,7 +66,8 @@ class Optimizacion(FloatProblem):
     def get_name(self) -> str:
         return 'Optimización'
 
-if __name__ == '__main__':
+@app.route('/')
+def main():
     problem = Optimizacion()
     mutation_probability = 1.0 / problem.number_of_variables
     max_evaluations = 250
@@ -81,4 +86,5 @@ if __name__ == '__main__':
 
     algorithm.run()
     solutions = algorithm.get_result()
-    print(str(solutions[0]))
+
+    return str(solutions[0])

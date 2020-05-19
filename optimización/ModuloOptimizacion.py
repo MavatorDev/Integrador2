@@ -17,7 +17,7 @@ from time import time
 import random
 
 import json
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
@@ -72,11 +72,29 @@ class Optimizacion(FloatProblem):
 
 @app.route('/optimizar', methods=['POST'])
 def mopso():
-    
+    data = request.get_json()
+
+    global Text
+    global SetPoint
+    global People
+    global Tint
+    global Month
+    global Day
+    global Hour
+    global Interval
+
+    Text = data['Text']
+    SetPoint = data['SetPoint']
+    People = data['People']
+    Tint = data['Tint']
+    Month = data['Month']
+    Day = data['Day']
+    Hour = data['Hour']
+    Interval = data['Interval']
 
     problem = Optimizacion()
     mutation_probability = 1.0 / problem.number_of_variables
-    max_evaluations = 250
+    max_evaluations = 1000
     swarm_size = 100
 
     algorithm = OMOPSO(
@@ -95,4 +113,4 @@ def mopso():
 
     salida = {'cap': solutions[0].variables, 'obj': solutions[0].objectives}
 
-    return json.loads(salida)
+    return json.dumps(salida)

@@ -71,7 +71,7 @@ if __name__ == '__main__':
     algorithm = OMOPSO(
         problem=problem,
         swarm_size=swarm_size,
-        epsilon=0.0075,
+        epsilon=0.001,
         uniform_mutation=UniformMutation(probability=mutation_probability, perturbation=0.5),
         non_uniform_mutation=NonUniformMutation(mutation_probability, perturbation=0.5,
                                                 max_iterations=int(max_evaluations / swarm_size)),
@@ -79,34 +79,6 @@ if __name__ == '__main__':
         termination_criterion=StoppingByEvaluations(max_evaluations=max_evaluations)
     )
 
-    st = time()
-    print('ejecutanedo mopso')
-    algorithm.run()    
-    print('Tiempo de ejecución: ' + str(time() - st))
+    algorithm.run()
     solutions = algorithm.get_result()
     print(str(solutions[0]))
-
-    """algorithm = NSGAII(
-        problem=problem,
-        population_size=100,
-        offspring_population_size=100,
-        mutation=BitFlipMutation(probability=0.5),
-        crossover=SPXCrossover(probability=0.8),
-        termination_criterion=StoppingByEvaluations(max_evaluations=250)
-    )
-
-    algorithm.run()
-    front = algorithm.get_result()
-
-    # Save results to file
-    print_function_values_to_file(front, 'FUN.' + algorithm.label)
-    print_variables_to_file(front, 'VAR.'+ algorithm.label)
-
-    print('ejecutando NSGA')
-    st = time()
-    algorithm.run()
-    print('Tiempo de ejecución: ' + str(time() - st))
-    front = algorithm.get_result()
-    print(str(front[0]))
-    print('Algorithm: ' + algorithm.get_name())
-    print('Computing time: ' + str(algorithm.total_computing_time))"""

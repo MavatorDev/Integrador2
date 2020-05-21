@@ -64,6 +64,8 @@ pd.options.display.max_columns = None
 #       n_outputs_: number of outputs when fit is performed.
 #       oob_score_: Score of the training dataset with an out-of-bag estimate
 #       oob_prediction_: Prediction with out-of-bag estimate
+
+
 forest = RandomForestRegressor(
     bootstrap = True,
     criterion = 'mse',

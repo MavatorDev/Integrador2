@@ -16,11 +16,6 @@ from jmetal.operator import BitFlipMutation, SPXCrossover
 from time import time
 import random
 
-import json
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-
 Text = 0
 SetPoint = 0
 People = 0
@@ -70,9 +65,7 @@ class Optimizacion(FloatProblem):
     def get_name(self) -> str:
         return 'Optimización'
 
-@app.route('/optimizar', methods=['POST'])
-def mopso():
-    data = request.get_json()
+def mopso(lista):
 
     global Text
     global SetPoint
@@ -83,14 +76,14 @@ def mopso():
     global Hour
     global Interval
 
-    Text = data['Text']
-    SetPoint = data['SetPoint']
-    People = data['People']
-    Tint = data['Tint']
-    Month = data['Month']
-    Day = data['Day']
-    Hour = data['Hour']
-    Interval = data['Interval']
+    Text = lista[0]
+    SetPoint = lista[1]
+    People = lista[2]
+    Tint = lista[3]
+    Month = lista[4]
+    Day = lista[5]
+    Hour = lista[6]
+    Interval = lista[7]
 
     problem = Optimizacion()
     mutation_probability = 1.0 / problem.number_of_variables

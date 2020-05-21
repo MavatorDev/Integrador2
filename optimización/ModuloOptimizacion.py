@@ -1,4 +1,4 @@
-from HVAC_Model import forest
+from HVAC_Model import forest, forestAux
 
 from jmetal.algorithm.multiobjective.omopso import OMOPSO
 from jmetal.operator import UniformMutation
@@ -112,5 +112,7 @@ def mopso():
     solutions = algorithm.get_result()
 
     salida = {'cap': solutions[0].variables, 'obj': solutions[0].objectives}
+
+    print(forestAux.predict([solutions[0].variables + [Text, People, Tint]]))
 
     return json.dumps(salida)

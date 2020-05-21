@@ -20,6 +20,7 @@
 #   - Python 3.7.6rc1 
 #   - pandas 0.25.3
 import pandas as pd
+import numpy as np
 
 # Data analysis:
 #   - To split dataset
@@ -64,7 +65,8 @@ pd.options.display.max_columns = None
 #       n_outputs_: number of outputs when fit is performed.
 #       oob_score_: Score of the training dataset with an out-of-bag estimate
 #       oob_prediction_: Prediction with out-of-bag estimate
-forest = RandomForestRegressor(
+
+forestAux = RandomForestRegressor(
     bootstrap = True,
     criterion = 'mse',
     max_depth = None,
@@ -82,9 +84,18 @@ forest = RandomForestRegressor(
     verbose = 0,
     warm_start = False)
 #Random Forest Model learning
-x = pd.read_excel('input/predictors.xlsx').drop(['Time', 's_Tr_AmbC', 's_Tr_CrcC', 's_Tr_CrcF', 's_Tr_FyrF', 's_Tr_GdF', 's_Tr_GoyaF', 's_Tr_Hal1F', 's_Tr_PitF', 
+x = pd.read_excel('input/predictors.xlsx')
+x = x.drop(['Time', 'TExt', 'T0', 'People', 'Tr', 'month', 'day', 'hour', 'Interval'], axis=1)[:len(x)]
+
+y = x[ [ 's_Tr_AmbC', 's_Tr_CrcC', 's_Tr_CrcF', 's_Tr_FyrF', 's_Tr_GdF', 's_Tr_GoyaF', 's_Tr_Hal1F', 's_Tr_PitF', 
 's_Tr_StdsC', 's_Tr_StdsF', 's_TRet_AmbF', 's_TRet_StllC', 's_TRet_StllF', 'z_Tr_AmbC', 'z_Tr_GyrreC', 'z_Tr_HalSAPAF', 
 'z_Tr_OrchReheF', 'z_Tr_Sng4', 'z_TRet_Bllt', 'z_TRet_Choir', 'z_TRet_CrcC', 'z_TRet_CrcF', 'z_TRet_Hal6F', 'z_TRet_OffiF', 
-'z_TRet_R14', 'z_TRet_Store', 'z_TRet_Tech'], axis=1)
-y = pd.read_excel('input/target.xlsx').drop('Time',axis=1)
-forest.fit(x,y)
+'z_TRet_R14', 'z_TRet_Store', 'z_TRet_Tech' ] ]
+
+x = x.dropna().iloc[0:3371]
+y = y.dropna().iloc[1:]
+
+print(y.columns)
+print(x.columns)
+
+forestAux.fit(x,y)

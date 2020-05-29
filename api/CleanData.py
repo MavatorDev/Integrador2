@@ -48,6 +48,11 @@ df = zones
 df = df.reset_index()
 df = df.rename(columns = {'index':'tStart'})
 
+df = df[['tStart', 'z_TRet_Tech', 'z_TRet_Store', 'z_TRet_StoreA', 'z_TRet_BxC', 'z_TRet_BxF', 'z_TRet_PitF', 'z_TRet_DrssF',
+        'z_Tr_GoyaF', 'z_TRet_R14', 'z_Tr_GoyaF.1', 'z_TRet_OffiF', 'z_TRet_OffiC', 'z_TRet_CfeC', 'z_TRet_CfeF', 'z_TRet_PortalC',
+        'z_TRet_PortalF', 'z_TRet_Hal6F', 'z_TRet_HalC', 'z_TRet_CrcC', 'z_Tr_Cfe', 'z_Tr_HalSAPAF', 'z_TRet_CrcF', 'z_TRet_OffiC.1', 
+        'z_TRet_OffiF.1', 'z_TRet_RegF', 'z_TRet_StringF', 'z_Tr_OrchOffiF']]
+
 df['setPoint'] = setPoint
 df['clasificador'] = 1
 df_changes = df.drop(['setPoint', 'clasificador', 'tStart'], 1)
@@ -65,7 +70,10 @@ for indice_fila, fila in df_changes.iterrows():
     if indice_fila > 0:
         #fila.abs()
         meanRow = stats.mean(fila)
-        if beforeMean >= setPoint:
+        if meanRow == 0:
+            beforeMean = beforeMean
+            clasificacion.append(1)
+        elif beforeMean >= setPoint:
             #print(meanFila)
             if (meanRow < beforeMean): #& (countForFails == 1)):
                 clasificacion.append(1)
@@ -100,7 +108,7 @@ for indice_fila, fila in df_changes.iterrows():
             elif ((meanRow > beforeMean) & (countForFails ==2)):
                 countForFails = 1
                 beforeMean = meanRow
-                clasificacion.append(0)""" 
+                clasificacion.append(0)"""
 
 
 for indice_fila, fila in df.iterrows():

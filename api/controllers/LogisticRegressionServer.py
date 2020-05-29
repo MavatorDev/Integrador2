@@ -37,20 +37,25 @@ class logistic:
     def takeTemperature(self):
         #print('lei')
         dataframe = pd.read_excel('../input/predictors.xlsx')
+        
         Text =  dataframe[['TExt', 'T0', 'People', 'Tr', 'month', 'day', 'hour', 'Interval']]
+
         Text = Text.iloc[0, :]
-        print('temperatura')
+
         dataframe = dataframe[['s_Tr_AmbC', 's_Tr_CrcC', 's_Tr_CrcF', 's_Tr_FyrF', 's_Tr_GdF', 's_Tr_GoyaF', 's_Tr_Hal1F', 's_Tr_PitF', 
         's_Tr_StdsC', 's_Tr_StdsF', 's_TRet_AmbF', 's_TRet_StllC', 's_TRet_StllF', 'z_Tr_AmbC', 'z_Tr_GyrreC', 'z_Tr_HalSAPAF', 
         'z_Tr_OrchReheF', 'z_Tr_Sng4', 'z_TRet_Bllt', 'z_TRet_Choir', 'z_TRet_CrcC', 'z_TRet_CrcF', 'z_TRet_Hal6F', 'z_TRet_OffiF', 
         'z_TRet_R14', 'z_TRet_Store', 'z_TRet_Tech']]
+
         dataframe = dataframe.dropna(axis = 0)
-        print('mopso')
+
         solution = mopso(Text)
         #print(solution)
         #print(dataframe.iloc[0,:].values.tolist())
         predicion = predecir(solution['cap'] + dataframe.iloc[0,:].values.tolist())
+
         dataframe = pd.DataFrame(predicion)#predicion.__getitem__(0)
+
         dataframe.columns = ['s_Tr_AmbC', 's_Tr_CrcC', 's_Tr_CrcF', 's_Tr_FyrF', 's_Tr_GdF', 's_Tr_GoyaF', 's_Tr_Hal1F', 's_Tr_PitF', 
         's_Tr_StdsC', 's_Tr_StdsF', 's_TRet_AmbF', 's_TRet_StllC', 's_TRet_StllF', 'z_Tr_AmbC', 'z_Tr_GyrreC', 'z_Tr_HalSAPAF', 
         'z_Tr_OrchReheF', 'z_Tr_Sng4', 'z_TRet_Bllt', 'z_TRet_Choir', 'z_TRet_CrcC', 'z_TRet_CrcF', 'z_TRet_Hal6F', 'z_TRet_OffiF', 

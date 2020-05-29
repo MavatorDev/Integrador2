@@ -55,8 +55,8 @@ class Optimizacion(FloatProblem):
                                     number_of_objectives= self.number_of_objectives,
                                     number_of_constraints= self.number_of_constraints)
 
-        new_solution.variables[0] = round(random.random()*(-100),2)
-        new_solution.variables[1] = round(random.random()*(-100),2)
+        new_solution.variables[0] = round(random.random()*(-150)+50,2)
+        new_solution.variables[1] = round(random.random()*(-150)+50,2)
         new_solution.variables[2] = round(random.random()*(-100),2)
         new_solution.variables[3] = round(random.random()*(-100),2)
             
@@ -105,7 +105,5 @@ def mopso(lista):
     solutions = algorithm.get_result()
 
     salida = {'cap': solutions[0].variables, 'obj': solutions[0].objectives}
-
-    #print(forestAux.predict([solutions[0].variables + [Text, People, Tint]]))
 
     return salida

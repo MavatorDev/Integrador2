@@ -1,4 +1,4 @@
-from HVAC_Model import forest#, forestAux
+from optimization.HVAC_Model import forest#, forestAux
 
 from jmetal.algorithm.multiobjective.omopso import OMOPSO
 from jmetal.operator import UniformMutation

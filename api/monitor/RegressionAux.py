@@ -84,7 +84,7 @@ forestAux = RandomForestRegressor(
     verbose = 0,
     warm_start = False)
 #Random Forest Model learning
-x = pd.read_excel('../input/predictors.xlsx')
+x = pd.read_excel('./input/predictors.xlsx')
 x = x.drop(['Time', 'TExt', 'T0', 'People', 'Tr', 'month', 'day', 'hour', 'Interval'], axis=1)[:len(x)]
 
 y = x[ [ 's_Tr_AmbC', 's_Tr_CrcC', 's_Tr_CrcF', 's_Tr_FyrF', 's_Tr_GdF', 's_Tr_GoyaF', 's_Tr_Hal1F', 's_Tr_PitF', 

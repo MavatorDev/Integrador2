@@ -3,6 +3,8 @@ from datetime import date
 from datetime import datetime
 
 op = db.optimization
+resultModel = db.resultModel
+
 
 def saveSolution(dic):
     obj = dic['obj']
@@ -12,5 +14,12 @@ def saveSolution(dic):
 
     try:
         op.insert_one(solution)
+    except Exception as e:
+        print ("Unexpected error:", type(e), e)
+
+def resultsExecuteModel(n):
+    result = {"Date": datetime.now(), "state": n}
+    try:
+        resultModel.insert_one(result)
     except Exception as e:
         print ("Unexpected error:", type(e), e)

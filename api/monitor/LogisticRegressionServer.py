@@ -11,12 +11,12 @@ import seaborn as sb
 from time import time
 import random
 import sched, time
-from twisted.internet import task
-from twisted.internet import reactor
 from monitor.RegressionAux import predecir
 from optimization.ModuloOptimizacion import mopso
 from models.optimization import saveSolution as sSol
 from models.temperature import saveGeneratedTemperature as sT
+from models.optimization import resultsExecuteModel as saveModel
+from models.temperature import getTemperatures
 
 
 class logistic:
@@ -24,10 +24,15 @@ class logistic:
     def __init__(self):
         super().__init__()
         self.model = 0
-        self.constantValues = 0
+        self.dataframePredictors = 0
+        self.temperatures = 0
+        self.solution = 0
+        self.m = 1
+        self.setpoint = 0
 
     def chargeDataInitial(self):
         dataframe = pd.read_excel('./input/clasificasion.xlsx')
+        self.dataframePredictors = pd.read_excel('./input/predictors.xlsx')
         dfm = dataframe.drop(['clasificador', 'tStart'], 1)
         X = dfm
         y = dataframe['clasificador']
@@ -38,33 +43,47 @@ class logistic:
         prediction = self.model.predict(X)
         return prediction
 
-    def start(self):
-        dataframe = pd.read_excel('./input/predictors.xlsx')
-        
-        self.constantValues =  dataframe[['TExt', 'T0', 'People', 'Tr', 'month', 'day', 'hour', 'Interval']]
+    def start(self, n):
+        self.m = 1
+        constantValues =  self.dataframePredictors[['TExt', 'T0', 'People', 'Tr', 'month', 'day', 'hour', 'Interval']]
 
-        self.constantValues = self.constantValues.iloc[0, :]
+        constantValues = constantValues.iloc[0, :]
 
-        dataframe = dataframe[['s_Tr_AmbC', 's_Tr_CrcC', 's_Tr_CrcF', 's_Tr_FyrF', 's_Tr_GdF', 's_Tr_GoyaF', 's_Tr_Hal1F', 's_Tr_PitF', 
+        dataframe = self.dataframePredictors[['s_Tr_AmbC', 's_Tr_CrcC', 's_Tr_CrcF', 's_Tr_FyrF', 's_Tr_GdF', 's_Tr_GoyaF', 's_Tr_Hal1F', 's_Tr_PitF', 
         's_Tr_StdsC', 's_Tr_StdsF', 's_TRet_AmbF', 's_TRet_StllC', 's_TRet_StllF', 'z_Tr_AmbC', 'z_Tr_GyrreC', 'z_Tr_HalSAPAF', 
         'z_Tr_OrchReheF', 'z_Tr_Sng4', 'z_TRet_Bllt', 'z_TRet_Choir', 'z_TRet_CrcC', 'z_TRet_CrcF', 'z_TRet_Hal6F', 'z_TRet_OffiF', 
         'z_TRet_R14', 'z_TRet_Store', 'z_TRet_Tech']]
 
         dataframe = dataframe.dropna(axis = 0)
 
-        solution = mopso(self.constantValues)
-        sSol(solution)
+        self.solution = mopso(constantValues)
 
-        predicion = predecir(solution['cap'] + dataframe.iloc[0,:].values.tolist())
-        sT(predicion)
-        predicion = predicion[0]
-        print('bien')
+        sSol(self.solution)
 
-    """def lookWithMonitor(self):
+        predicion = predecir(self.solution['cap'] + dataframe.iloc[0,:].values.tolist())
+        #predicion = predicion[0]
+        dataframe = pd.DataFrame(predicion)
+        dataframe.columns = ['s_Tr_AmbC', 's_Tr_CrcC', 's_Tr_CrcF', 's_Tr_FyrF', 's_Tr_GdF', 's_Tr_GoyaF', 's_Tr_Hal1F', 's_Tr_PitF', 
+        's_Tr_StdsC', 's_Tr_StdsF', 's_TRet_AmbF', 's_TRet_StllC', 's_TRet_StllF', 'z_Tr_AmbC', 'z_Tr_GyrreC', 'z_Tr_HalSAPAF', 
+        'z_Tr_OrchReheF', 'z_Tr_Sng4', 'z_TRet_Bllt', 'z_TRet_Choir', 'z_TRet_CrcC', 'z_TRet_CrcF', 'z_TRet_Hal6F', 'z_TRet_OffiF', 
+        'z_TRet_R14', 'z_TRet_Store', 'z_TRet_Tech']
+        self.temperatures = dataframe
+        sT(dataframe)
+        self.setpoint = n
+        self.temperatures['setPoint'] = n
 
-        solution = mopso(Text)
+    def executeOptimizationFail(self):
+        constantValues =  self.dataframePredictors[['TExt', 'T0', 'People', 'Tr', 'month', 'day', 'hour', 'Interval']]
+        constantValues = constantValues.iloc[self.m, :]
+        dataframe = self.dataframePredictors[['s_Tr_AmbC', 's_Tr_CrcC', 's_Tr_CrcF', 's_Tr_FyrF', 's_Tr_GdF', 's_Tr_GoyaF', 's_Tr_Hal1F', 's_Tr_PitF', 
+        's_Tr_StdsC', 's_Tr_StdsF', 's_TRet_AmbF', 's_TRet_StllC', 's_TRet_StllF', 'z_Tr_AmbC', 'z_Tr_GyrreC', 'z_Tr_HalSAPAF', 
+        'z_Tr_OrchReheF', 'z_Tr_Sng4', 'z_TRet_Bllt', 'z_TRet_Choir', 'z_TRet_CrcC', 'z_TRet_CrcF', 'z_TRet_Hal6F', 'z_TRet_OffiF', 
+        'z_TRet_R14', 'z_TRet_Store', 'z_TRet_Tech']]
 
-        predicion = predecir(solution['cap'] + dataframe.iloc[0,:].values.tolist())
+        dataframe = dataframe.dropna(axis = 0)
+        self.solution = mopso(constantValues)
+        sSol(self.solution)
+        predicion = predecir(self.solution['cap'] + dataframe.iloc[self.m,:].values.tolist())
 
         dataframe = pd.DataFrame(predicion)
 
@@ -72,10 +91,36 @@ class logistic:
         's_Tr_StdsC', 's_Tr_StdsF', 's_TRet_AmbF', 's_TRet_StllC', 's_TRet_StllF', 'z_Tr_AmbC', 'z_Tr_GyrreC', 'z_Tr_HalSAPAF', 
         'z_Tr_OrchReheF', 'z_Tr_Sng4', 'z_TRet_Bllt', 'z_TRet_Choir', 'z_TRet_CrcC', 'z_TRet_CrcF', 'z_TRet_Hal6F', 'z_TRet_OffiF', 
         'z_TRet_R14', 'z_TRet_Store', 'z_TRet_Tech']
-        dataframe['setPoint'] = 23.5
-        self.executeModel(dataframe)
+        self.temperatures = dataframe
+        sT(dataframe)
+        self.temperatures['setPoint'] = self.setpoint
 
-    def look(self):
-        l = task.LoopingCall(takeTemperature())
-        l.start(900)
-        reactor.run()"""
+    def executeOptimization(self):
+        dataframe = self.dataframePredictors[['s_Tr_AmbC', 's_Tr_CrcC', 's_Tr_CrcF', 's_Tr_FyrF', 's_Tr_GdF', 's_Tr_GoyaF', 's_Tr_Hal1F', 's_Tr_PitF', 
+        's_Tr_StdsC', 's_Tr_StdsF', 's_TRet_AmbF', 's_TRet_StllC', 's_TRet_StllF', 'z_Tr_AmbC', 'z_Tr_GyrreC', 'z_Tr_HalSAPAF', 
+        'z_Tr_OrchReheF', 'z_Tr_Sng4', 'z_TRet_Bllt', 'z_TRet_Choir', 'z_TRet_CrcC', 'z_TRet_CrcF', 'z_TRet_Hal6F', 'z_TRet_OffiF', 
+        'z_TRet_R14', 'z_TRet_Store', 'z_TRet_Tech']]
+
+        dataframe = dataframe.dropna(axis = 0)
+        predicion = predecir(self.solution['cap'] + dataframe.iloc[self.m,:].values.tolist())
+
+        dataframe = pd.DataFrame(predicion)
+
+        dataframe.columns = ['s_Tr_AmbC', 's_Tr_CrcC', 's_Tr_CrcF', 's_Tr_FyrF', 's_Tr_GdF', 's_Tr_GoyaF', 's_Tr_Hal1F', 's_Tr_PitF', 
+        's_Tr_StdsC', 's_Tr_StdsF', 's_TRet_AmbF', 's_TRet_StllC', 's_TRet_StllF', 'z_Tr_AmbC', 'z_Tr_GyrreC', 'z_Tr_HalSAPAF', 
+        'z_Tr_OrchReheF', 'z_Tr_Sng4', 'z_TRet_Bllt', 'z_TRet_Choir', 'z_TRet_CrcC', 'z_TRet_CrcF', 'z_TRet_Hal6F', 'z_TRet_OffiF', 
+        'z_TRet_R14', 'z_TRet_Store', 'z_TRet_Tech']
+        self.temperatures = dataframe
+        sT(dataframe)
+        self.temperatures['setPoint'] = self.setpoint
+
+    def takeState(self):
+        result = self.executeModel(self.temperatures)
+        if result == 0:
+            saveModel(0)
+            self.executeOptimizationFail()
+        else:
+            saveModel(1)
+            self.executeOptimization()
+        self.m = self.m + 1
+        print(self.m)

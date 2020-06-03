@@ -8,25 +8,24 @@ logistic = logistic()
 logistic.chargeDataInitial()
 app = Flask(__name__)
 #scheduler = APScheduler()
-
 CORS(app)
-
 
 @app.route('/api/start/<n>', methods = ['GET'])
 def startApp(n):
     print(n)
     logistic.start(n)
-    scheduler.add_job(id = 'Scheduler app', func = logistic.takeState, trigger='interval', seconds = 5)
+    actuallyJob = scheduler.add_job(id = 'Scheduler_app', func = logistic.takeState, trigger='interval', seconds = 10)
     return jsonify({"conf":True})
 
 
 @app.route('/api/restart/')
 def restart():
-    pass
-
+    actuallyJob = scheduler.add_job(id = 'Scheduler_app', func = logistic.takeState, trigger='interval', seconds = 10)
+    print('ready')
 
 @app.route('/api/stop/')
 def stop():
+    scheduler.remove_job('Scheduler_app')
     pass
 
 @app.route('/api/temperatures/')

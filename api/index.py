@@ -18,13 +18,13 @@ CORS(app)
 def startApp(n):
     print(n)
     logistic.start(n)
-    actuallyJob = scheduler.add_job(id = 'Scheduler_app', func = logistic.takeState, trigger='interval', seconds = 10)
+    actuallyJob = scheduler.add_job(id = 'Scheduler_app', func = logistic.takeState, trigger='interval', seconds = 900)
     return jsonify({"conf":True})
 
 
 @app.route('/api/restart/')
 def restart():
-    actuallyJob = scheduler.add_job(id = 'Scheduler_app', func = logistic.takeState, trigger='interval', seconds = 10)
+    actuallyJob = scheduler.add_job(id = 'Scheduler_app', func = logistic.takeState, trigger='interval', seconds = 900)
     return jsonify({"conf":True})
 
 @app.route('/api/stop/')

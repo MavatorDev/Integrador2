@@ -39,5 +39,5 @@ def getSolutions():
     for fut in curs:
         list.append({"bomba1": fut["bomba1"], "bomba2": fut["bomba2"], "bomba3": fut["bomba3"], "bomba4": fut["bomba4"]})
     list.reverse()
-    list = list[0:6]
+    list = list[0]
     return list

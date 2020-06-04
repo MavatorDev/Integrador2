@@ -28,7 +28,7 @@ def getResults():
     curs= resultModel.find()
     list = []
     for fut in curs:
-        list.append({"Date ": fut['Date'] , "state": fut['state']})
+        list.append({"Date": fut['Date'] , "state": fut['state']})
     list.reverse()
     list = list[0:10]
     return list

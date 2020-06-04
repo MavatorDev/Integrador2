@@ -75,7 +75,7 @@ export default function Login() {
   };
 
   const handleClick = (event) => {
-    axios.post('http://localhost:5000/login', { username, password })
+    axios.post('http://proyecto24.fail/login', { username, password })
     .then(res => {
 
       if(res.data.auth == true){

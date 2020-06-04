@@ -6,12 +6,12 @@ const app = express();
 const { mongoose } = require('./database');
 
 // Settings
-app.set('port', process.env.PORT || 5000);
+app.set('port', process.env.PORT || 80);
 
 // Middlewares
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(cors({origin: 'http://localhost'}));
+app.use(cors({origin: 'http://proyecto24.fail'}));
 
 //Routes
 app.use(require('./routes/routes'));

@@ -25,9 +25,19 @@ def resultsExecuteModel(n):
         print ("Unexpected error:", type(e), e)
 
 def getResults():
-    list = resultModel.sort("_id", -10)
+    curs= resultModel.find()
+    list = []
+    for fut in curs:
+        list.append({"Date ": fut['Date'] , "state": fut['state']})
+    list.reverse()
+    list = list[0:10]
     return list
 
 def getSolutions():
-    list = op.sort("_id", -3)
+    curs= op.find()
+    list = []
+    for fut in curs:
+        list.append({"bomba1": fut["bomba1"], "bomba2": fut["bomba2"], "bomba3": fut["bomba3"], "bomba4": fut["bomba4"]})
+    list.reverse()
+    list = list[0:6]
     return list

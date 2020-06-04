@@ -35,8 +35,6 @@ def stop():
 @app.route('/api/temperatures/')
 def temperatures():
     tem = getTemperatures()
-    envio = jsonify(tem)
-    print(envio)
     return jsonify(tem)
 
 @app.route('/api/states/')

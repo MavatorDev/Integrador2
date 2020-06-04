@@ -3,6 +3,10 @@ from flask_cors import CORS
 from flask import request, Response, jsonify, render_template
 from flask_apscheduler import APScheduler
 from monitor.LogisticRegressionServer import *
+from models.temperature import getTemperatures
+from models.optimization import getSolutions
+from models.optimization import getResults
+
 #from scheduler import Scheduler
 logistic = logistic()
 logistic.chargeDataInitial()
@@ -30,15 +34,20 @@ def stop():
 
 @app.route('/api/temperatures/')
 def temperatures():
-    pass
+    tem = getTemperatures()
+    envio = jsonify(tem)
+    print(envio)
+    return jsonify(tem)
 
 @app.route('/api/states/')
 def states():
-    pass
+    re = getResults()
+    return jsonify(re)
 
 @app.route('/api/solutions/')
 def solutions():
-    pass
+    sol = getSolutions()
+    return jsonify(sol)
 
 
 

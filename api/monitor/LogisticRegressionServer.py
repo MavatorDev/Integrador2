@@ -16,7 +16,6 @@ from optimization.ModuloOptimizacion import mopso
 from models.optimization import saveSolution as sSol
 from models.temperature import saveGeneratedTemperature as sT
 from models.optimization import resultsExecuteModel as saveModel
-from models.temperature import getTemperatures
 
 
 class logistic:

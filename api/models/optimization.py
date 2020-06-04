@@ -23,3 +23,11 @@ def resultsExecuteModel(n):
         resultModel.insert_one(result)
     except Exception as e:
         print ("Unexpected error:", type(e), e)
+
+def getResults():
+    list = resultModel.sort("_id", -10)
+    return list
+
+def getSolutions():
+    list = op.sort("_id", -3)
+    return list

@@ -25,12 +25,12 @@ def startApp(n):
 @app.route('/api/restart/')
 def restart():
     actuallyJob = scheduler.add_job(id = 'Scheduler_app', func = logistic.takeState, trigger='interval', seconds = 10)
-    print('ready')
+    return jsonify({"conf":True})
 
 @app.route('/api/stop/')
 def stop():
     scheduler.remove_job('Scheduler_app')
-    pass
+    return jsonify({"conf":True})
 
 @app.route('/api/temperatures/')
 def temperatures():
@@ -55,4 +55,4 @@ if __name__ == '__main__':
     scheduler = APScheduler()
     scheduler.init_app(app)
     scheduler.start()
-    app.run(port= 8000)
+    app.run(por t= 8000)
